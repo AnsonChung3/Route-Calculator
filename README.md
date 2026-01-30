@@ -35,7 +35,7 @@ Route Calculator/
 │   │   ├── Edge.tsx          # SVG line with value label
 │   │   └── ScorePanel.tsx    # Running total and tier display
 │   ├── data/
-│   │   ├── nodes.csv         # id, name, x, y
+│   │   ├── nodes.csv         # id, name, latitude, longitude
 │   │   └── edges.csv         # from, to, value
 │   ├── types/
 │   │   └── index.ts          # Node, Edge, Tier interfaces
@@ -70,19 +70,19 @@ Create CSV files in `src/data/`:
 **nodes.csv**
 
 ```csv
-id,name,x,y
-1,London,0.55,0.85
-2,Manchester,0.45,0.55
+id,name,latitude,longitude
+1,London,51.5074,-0.1278
+2,Manchester,53.4808,-2.2426
 ```
 
 **edges.csv**
 
 ```csv
 from,to,value
-1,2,150
+London,Manchester,10
 ```
 
-Coordinates are percentage-based (0-1) relative to the map container.
+Coordinates use WGS84 decimal degrees (latitude/longitude as used by GPS).
 
 ## Development
 
