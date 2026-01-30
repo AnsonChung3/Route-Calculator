@@ -1,0 +1,160 @@
+from,to,value
+South Tyneside,Gateshead,10
+South Tyneside,Darlington,10
+Knowsley,St. Helens,10
+Knowsley,Liverpool,10
+St. Helens,Knowsley,10
+St. Helens,Bury,10
+St. Helens,Liverpool,10
+Bury,St. Helens,10
+Bury,Manchester,10
+Bury,Bradford,10
+Gateshead,South Tyneside,10
+Gateshead,County Durham,10
+Darlington,County Durham,10
+Darlington,North Yorkshire,10
+Darlington,South Tyneside,10
+Conwy,Gwynedd,10
+Conwy,Preston,10
+Gwynedd,Conwy,10
+Gwynedd,Cornwall,10
+Pembrokeshire,Cornwall,10
+Pembrokeshire,Somerset,10
+Bracknell Forest,Buckinghamshire,10
+Bracknell Forest,Oxford,10
+Melton,Charnwood,10
+Melton,West Suffolk,10
+West Devon,Cornwall,10
+West Devon,Somerset,10
+Oadby and Wigston,Leicester,10
+Oadby and Wigston,Charnwood,10
+Adur,Arun,10
+Adur,Wealden,10
+Ribble Valley,Preston,10
+Ribble Valley,Bury,10
+Liverpool,Knowsley,10
+Liverpool,St. Helens,10
+Bradford,Leeds,10
+Bradford,Sheffield,10
+Bradford,Bury,10
+Sheffield,Bradford,10
+Sheffield,Leeds,10
+Manchester,Bury,10
+Manchester,Cheshire East,10
+Manchester,Bradford,10
+Leeds,Bradford,10
+Leeds,Sheffield,10
+Leeds,North Yorkshire,10
+Birmingham,West Northamptonshire,10
+Birmingham,Leicester,10
+City of London,Barnet,10
+City of London,Croydon,10
+Barnet,City of London,10
+Barnet,Croydon,10
+Croydon,City of London,10
+Croydon,Barnet,10
+Canterbury,Maidstone,10
+Canterbury,Wealden,10
+Preston,Ribble Valley,10
+Preston,St. Helens,10
+Braintree,Chelmsford,10
+Braintree,Colchester,10
+Oxford,Bracknell Forest,10
+Oxford,Cherwell,10
+Oxford,Buckinghamshire,10
+Wealden,Adur,10
+Wealden,Maidstone,10
+Arun,Adur,10
+Arun,New Forest,10
+Cherwell,Oxford,10
+Cherwell,West Northamptonshire,10
+South Cambridgeshire,Huntingdonshire,10
+South Cambridgeshire,Braintree,10
+New Forest,Dorset,10
+New Forest,Bournemouth Christchurch and Poole,10
+New Forest,Wiltshire,10
+Maidstone,Canterbury,10
+Maidstone,Wealden,10
+Maidstone,Braintree,10
+Charnwood,Melton,10
+Charnwood,Leicester,10
+Charnwood,Oadby and Wigston,10
+West Suffolk,Charnwood,10
+West Suffolk,Melton,10
+West Suffolk,Braintree,10
+Chelmsford,Braintree,10
+Chelmsford,Basildon,10
+Chelmsford,Colchester,10
+Huntingdonshire,South Cambridgeshire,10
+Huntingdonshire,Buckinghamshire,10
+Basingstoke and Deane,Bracknell Forest,10
+Basingstoke and Deane,Oxford,10
+Basingstoke and Deane,New Forest,10
+Basildon,Chelmsford,10
+Basildon,Braintree,10
+Colchester,Braintree,10
+Colchester,Chelmsford,10
+East Suffolk,Colchester,10
+East Suffolk,Braintree,10
+Cardiff,Bristol,10
+Cardiff,Somerset,10
+Leicester,Oadby and Wigston,10
+Leicester,Charnwood,10
+Leicester,Birmingham,10
+Dorset,Bournemouth Christchurch and Poole,10
+Dorset,New Forest,10
+Bournemouth Christchurch and Poole,Dorset,10
+Bournemouth Christchurch and Poole,New Forest,10
+Cheshire East,Manchester,10
+Cheshire East,Bury,10
+West Northamptonshire,Birmingham,10
+West Northamptonshire,Cherwell,10
+West Northamptonshire,Cheshire East,10
+Bristol,Wiltshire,10
+Bristol,Somerset,10
+Bristol,Cardiff,10
+Wiltshire,Bristol,10
+Wiltshire,Bournemouth Christchurch and Poole,10
+Wiltshire,New Forest,10
+County Durham,Gateshead,10
+County Durham,Darlington,10
+County Durham,North Yorkshire,10
+Buckinghamshire,Bracknell Forest,10
+Buckinghamshire,Oxford,10
+Buckinghamshire,Huntingdonshire,10
+Cornwall,Pembrokeshire,10
+Cornwall,West Devon,10
+Cornwall,Gwynedd,10
+Somerset,Bristol,10
+Somerset,Pembrokeshire,10
+Somerset,West Devon,10
+North Yorkshire,County Durham,10
+North Yorkshire,Darlington,10
+North Yorkshire,Leeds,10
+Orkney Islands,Shetland Islands,10
+Orkney Islands,Na h-Eileanan Siar,10
+Shetland Islands,Orkney Islands,10
+Shetland Islands,Na h-Eileanan Siar,10
+Na h-Eileanan Siar,Orkney Islands,10
+Na h-Eileanan Siar,Shetland Islands,10
+South Lanarkshire,North Lanarkshire,10
+South Lanarkshire,Glasgow City,10
+North Lanarkshire,South Lanarkshire,10
+North Lanarkshire,Fife,10
+North Lanarkshire,City of Edinburgh,10
+Fife,North Lanarkshire,10
+Fife,City of Edinburgh,10
+City of Edinburgh,Fife,10
+City of Edinburgh,North Lanarkshire,10
+City of Edinburgh,South Lanarkshire,10
+Glasgow City,South Lanarkshire,10
+Glasgow City,North Lanarkshire,10
+Fermanagh and Omagh,Mid and East Antrim,10
+Fermanagh and Omagh,Armagh Banbridge and Craigavon,10
+Mid and East Antrim,Belfast,10
+Mid and East Antrim,Fermanagh and Omagh,10
+Armagh Banbridge and Craigavon,Fermanagh and Omagh,10
+Armagh Banbridge and Craigavon,Mid and East Antrim,10
+Armagh Banbridge and Craigavon,Belfast,10
+Belfast,Mid and East Antrim,10
+Belfast,Armagh Banbridge and Craigavon,10
