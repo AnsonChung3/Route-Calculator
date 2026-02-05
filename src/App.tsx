@@ -41,18 +41,13 @@ function App() {
                     <li className="text-warning-600">warning-600</li>
                     <li className="text-error-500">error-500</li>
                     <li className="text-error-600">error-600</li>
-                    <li style={{ color: 'var(--color-surface)' }}>surface</li>
-                    <li style={{ color: 'var(--color-surface-raised)' }}>
-                        surface-raised
-                    </li>
-                    <li style={{ color: 'var(--color-surface-overlay)' }}>
-                        surface-overlay
-                    </li>
-                    <li style={{ color: 'var(--color-border)' }}>border</li>
-                    <li style={{ color: 'var(--color-text)' }}>text</li>
-                    <li style={{ color: 'var(--color-text-muted)' }}>
-                        text-muted
-                    </li>
+                    <li className="text-neutral-400">neutral-400</li>
+                    <li className="text-neutral-500">neutral-500</li>
+                    <li className="text-neutral-600">neutral-600</li>
+                    <li className="text-neutral-700">neutral-700</li>
+                    <li className="text-content-base">content-base</li>
+                    <li className="text-content-muted">content-muted</li>
+                    <li className="text-content-faint">content-faint</li>
                 </ul>
             </div>
         </div>

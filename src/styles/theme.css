@@ -28,7 +28,7 @@
     --color-success-500: #14b8a6;
     --color-success-600: #0d9488;
 
-    /* Coral warning */
+    /* Amber warning */
     --color-warning-500: #f59e0b;
     --color-warning-600: #d97706;
 
@@ -36,11 +36,19 @@
     --color-error-500: #e11d48;
     --color-error-600: #be123c;
 
-    /* Slate neutrals */
-    --color-surface: #0f172a;
+    /* Surface colours (backgrounds) */
+    --color-surface-base: #0f172a;
     --color-surface-raised: #1e293b;
     --color-surface-overlay: #334155;
-    --color-border: #475569;
-    --color-text: #f1f5f9;
-    --color-text-muted: #94a3b8;
+
+    /* Neutral colours (borders, muted elements) */
+    --color-neutral-400: #94a3b8;
+    --color-neutral-500: #64748b;
+    --color-neutral-600: #475569;
+    --color-neutral-700: #334155;
+
+    /* Text colours */
+    --color-content-base: #f1f5f9;
+    --color-content-muted: #94a3b8;
+    --color-content-faint: #64748b;
 }
