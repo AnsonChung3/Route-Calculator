@@ -14,6 +14,9 @@ Software Developer
 - Test what you build
 - Small, focused commits
 - Code should be self-documenting
+- Maintain separation of concerns — keep functions and components modular with single, clear responsibilities
+- Avoid hardcoding values; use constants, configuration, or parameters instead
+- Design for reusability — extract shared logic and favour composable, generic solutions
 
 ## Constraints
 - Must follow established coding standards
