@@ -1,0 +1,46 @@
+@theme {
+  /* Dark royal blue primary palette */
+  --color-primary-50: #e8eef6;
+  --color-primary-100: #c5d4e8;
+  --color-primary-200: #9fb7d9;
+  --color-primary-300: #7899c9;
+  --color-primary-400: #5b82bd;
+  --color-primary-500: #3e6bb1;
+  --color-primary-600: #3760a4;
+  --color-primary-700: #2d5092;
+  --color-primary-800: #234080;
+  --color-primary-900: #1a2f5f;
+  --color-primary-950: #0f1c3a;
+
+  /* Gold accent (complementary) */
+  --color-accent-50: #fef9e8;
+  --color-accent-100: #fcefc5;
+  --color-accent-200: #fae39f;
+  --color-accent-300: #f7d478;
+  --color-accent-400: #f5c85b;
+  --color-accent-500: #f2bc3e;
+  --color-accent-600: #d9a837;
+  --color-accent-700: #b8902d;
+  --color-accent-800: #977723;
+  --color-accent-900: #6b551a;
+
+  /* Teal success */
+  --color-success-500: #14b8a6;
+  --color-success-600: #0d9488;
+
+  /* Coral warning */
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+
+  /* Rose error */
+  --color-error-500: #e11d48;
+  --color-error-600: #be123c;
+
+  /* Slate neutrals */
+  --color-surface: #0f172a;
+  --color-surface-raised: #1e293b;
+  --color-surface-overlay: #334155;
+  --color-border: #475569;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+}
