@@ -2,7 +2,11 @@
 
 ## Project Overview
 
-Interactive UK route calculator app with node/edge selection and tiered rewards.
+A companion tool for a driving game challenge. Players select routes between UK locations, each with assigned point values, aiming to maximise their score within node/edge limits to unlock tiered rewards.
+
+## Personal Goal
+
+This project is being developed almost entirely through LLM-assisted coding, with minimal manual code intervention. It serves as both a practical experiment in AI-augmented development workflows and a portfolio piece demonstrating my ability to leverage modern tools to ship a functional, polished product efficiently.
 
 ## Tech Stack
 
