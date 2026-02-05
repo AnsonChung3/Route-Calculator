@@ -2,7 +2,7 @@
 
 ## Phase 1: Project Setup & Configuration
 
-- [ ] Configure Tailwind CSS with Vite (follow official guide)
+- [x] Configure Tailwind CSS with Vite (follow official guide)
 - [x] Install remaining dependencies (`react-zoom-pan-pinch`, `papaparse`, `@types/papaparse`)
 
 ## Phase 2: Node Display Prototype
