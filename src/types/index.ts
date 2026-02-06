@@ -9,3 +9,9 @@ export type CanvasNode = Node & {
     x: number;
     y: number;
 };
+
+export interface Edge {
+    from: string;
+    to: string;
+    value: number;
+}
