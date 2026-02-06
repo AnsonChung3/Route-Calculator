@@ -32,6 +32,7 @@
 - [ ] Add clear/reset selection button
 - [ ] Show list of currently selected routes
 - [ ] Verify full flow works: load data → display map → select edges → see updated total
+- [ ] Code QA and refactoring — extract hardcoded magic numbers into named constants or configuration; general cleanup and structural improvements
 
 ## Phase 5: Polish & Features
 
