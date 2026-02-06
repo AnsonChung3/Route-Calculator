@@ -13,18 +13,20 @@
 
 ## Commit 2: Rename `projectNodes` to `createVisualNodes`
 
-- [ ] Rename function in `src/utils/coordinates.ts`
-- [ ] Update import in `App.tsx`
+- [x] Rename function in `src/utils/coordinates.ts`
+- [x] Update import in `App.tsx` (removed; now imported by `MapCanvas.tsx`)
 
 ## Commit 3: Move Node rendering and visual-node creation into MapCanvas
 
-- [ ] Move `Node` import from `App.tsx` into `MapCanvas.tsx`
-- [ ] Move `createVisualNodes` call and node-mapping logic into `MapCanvas`
-- [ ] Have `MapCanvas` accept raw `Node[]` (plus canvas dimensions) instead of `children`; keep `CANVAS_WIDTH` and `CANVAS_HEIGHT` defined in `App.tsx`
-- [ ] Extract internal helpers within `MapCanvas` where sensible (e.g. node-rendering function)
-- [ ] Clean up `App.tsx` — remove now-unused imports and the top-level `canvasNodes` call
+- [x] Move `Node` import from `App.tsx` into `MapCanvas.tsx`
+- [x] Move `createVisualNodes` call and node-mapping logic into `MapCanvas`
+- [x] Have `MapCanvas` accept raw `Node[]` (plus canvas dimensions) instead of `children`; keep `CANVAS_WIDTH` and `CANVAS_HEIGHT` defined in `App.tsx`
+- [x] Clean up `App.tsx` — remove now-unused imports and the top-level `canvasNodes` call
+- [x] Fix leftover `node.name` → `node.town` from partial Commit 1
 
 ## Commit 4: Remove direct Node import from App.tsx
 
-- [ ] Confirm `Node.tsx` is only imported by `MapCanvas.tsx`
-- [ ] Confirm `App.tsx` has no reference to `Node` component
+- [x] Confirm `Node.tsx` is only imported by `MapCanvas.tsx`
+- [x] Confirm `App.tsx` has no reference to `Node` component
+
+> Commits 2–4 completed together in a single pass.

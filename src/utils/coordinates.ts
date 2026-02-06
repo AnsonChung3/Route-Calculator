@@ -1,6 +1,6 @@
 import type { Node, CanvasNode } from '../types';
 
-export function projectNodes(
+export function createVisualNodes(
     nodes: Node[],
     width: number,
     height: number,
