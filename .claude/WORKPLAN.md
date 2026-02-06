@@ -7,13 +7,13 @@
 
 ## Phase 2: Node Display Prototype
 
-- [ ] Create `Node` type definition (`src/types/index.ts`)
+- [x] Create `Node` type definition (`src/types/index.ts`)
 - [x] Create sample data files (`src/data/nodes.csv`, `src/data/edges.csv`)
-- [ ] Create CSV loader utility (`src/utils/csvLoader.ts`)
-- [ ] Create coordinate conversion utility (`src/utils/coordinates.ts`) - lat/long to canvas x/y
-- [ ] Create MapCanvas component (`src/components/MapCanvas.tsx`) - empty square container
-- [ ] Create Node component (`src/components/Node.tsx`) - basic styled dot/marker
-- [ ] Wire up App.tsx - load nodes, convert coordinates, render on canvas
+- [x] Create CSV loader utility (`src/utils/csvLoader.ts`)
+- [x] Create coordinate conversion utility (`src/utils/coordinates.ts`) - lat/long to canvas x/y
+- [x] Create MapCanvas component (`src/components/MapCanvas.tsx`) - empty square container
+- [x] Create Node component (`src/components/Node.tsx`) - basic styled dot/marker
+- [x] Wire up App.tsx - load nodes, convert coordinates, render on canvas
 
 ## Phase 3: Edge Display & Selection
 
