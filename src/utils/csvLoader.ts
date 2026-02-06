@@ -20,7 +20,7 @@ export function loadNodes(): Node[] {
 
     return data.map((row) => ({
         id: Number(row.ID),
-        name: row.Town,
+        town: row.Town,
         latitude: Number(row.Latitude),
         longitude: Number(row.Longitude),
     }));

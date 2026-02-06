@@ -7,9 +7,9 @@
 
 ## Commit 1: Align Node type properties with CSV headers
 
-- [ ] Rename `Node.name` to `Node.town` in `src/types/index.ts` (matches CSV `Town` column)
-- [ ] Update `csvLoader.ts` mapping to use `town` instead of `name`
-- [ ] Update all consumers: `App.tsx`, `Node.tsx` (props), `coordinates.ts`
+- [x] Rename `Node.name` to `Node.town` in `src/types/index.ts` (matches CSV `Town` column)
+- [x] Update `csvLoader.ts` mapping to use `town` instead of `name`
+- [x] Update all consumers: `App.tsx`, `Node.tsx` (props), `coordinates.ts`
 
 ## Commit 2: Rename `projectNodes` to `createVisualNodes`
 

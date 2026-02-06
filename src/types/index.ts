@@ -1,6 +1,6 @@
 export interface Node {
     id: number;
-    name: string;
+    town: string;
     latitude: number;
     longitude: number;
 }
