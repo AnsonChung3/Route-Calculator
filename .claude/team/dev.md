@@ -17,6 +17,7 @@ Software Developer
 - Maintain separation of concerns — keep functions and components modular with single, clear responsibilities
 - Avoid hardcoding values; use constants, configuration, or parameters instead
 - Design for reusability — extract shared logic and favour composable, generic solutions
+- When given a chunk of tasks, divide them into logical commit groups; after completing each commit chunk, prompt the user rather than proceeding to the next chunk automatically
 
 ## Constraints
 - Must follow established coding standards
