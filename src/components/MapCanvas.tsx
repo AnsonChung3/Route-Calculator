@@ -7,12 +7,19 @@ import type { CanvasNode, Edge as EdgeType } from '../types';
 interface MapCanvasProps {
     width: number;
     height: number;
+    selectedEdgeKeys: Set<string>;
+    onToggleEdge: (edgeKey: string) => void;
 }
 
 const nodes = loadNodes();
 const edges = loadEdges();
 
-export default function MapCanvas({ width, height }: MapCanvasProps) {
+export default function MapCanvas({
+    width,
+    height,
+    selectedEdgeKeys,
+    onToggleEdge,
+}: MapCanvasProps) {
     const canvasNodes = createVisualNodes(nodes, width, height);
     const positionsByTown = buildPositionLookup(canvasNodes);
     const resolvedEdges = resolveEdgePositions(edges, positionsByTown);
@@ -31,9 +38,9 @@ export default function MapCanvas({ width, height }: MapCanvasProps) {
                         x2={edge.to.x}
                         y2={edge.to.y}
                         value={edge.value}
-                        selected={false}
+                        selected={selectedEdgeKeys.has(edge.edgeKey)}
                         edgeKey={edge.edgeKey}
-                        onClick={handleEdgeClick}
+                        onClick={onToggleEdge}
                     />
                 ))}
             </svg>
@@ -63,12 +70,12 @@ function resolveEdgePositions(
             const from = positionsByTown.get(edge.from);
             const to = positionsByTown.get(edge.to);
             if (!from || !to) return null;
-            return { edgeKey: `${edge.from}-${edge.to}`, value: edge.value, from, to };
+            return {
+                edgeKey: `${edge.from}-${edge.to}`,
+                value: edge.value,
+                from,
+                to,
+            };
         })
         .filter((e) => e !== null);
-}
-
-/** Temporary click handler — logs the edge key to console. Replaced by App-level selection in Commit 3. */
-function handleEdgeClick(edgeKey: string) {
-    console.log('Edge clicked:', edgeKey);
 }
