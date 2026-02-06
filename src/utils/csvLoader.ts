@@ -3,10 +3,13 @@ import nodesRaw from '../data/nodes.csv?raw';
 import type { Node } from '../types';
 
 interface NodeRow {
-    id: string;
-    Name2: string;
+    ID: string;
+    Town: string;
     Latitude: string;
     Longitude: string;
+    Postcode: string;
+    Address: string;
+    Notes: string;
 }
 
 export function loadNodes(): Node[] {
@@ -16,8 +19,8 @@ export function loadNodes(): Node[] {
     });
 
     return data.map((row) => ({
-        id: Number(row.id),
-        name: row.Name2,
+        id: Number(row.ID),
+        name: row.Town,
         latitude: Number(row.Latitude),
         longitude: Number(row.Longitude),
     }));
