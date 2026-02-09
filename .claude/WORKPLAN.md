@@ -55,3 +55,7 @@
 - [ ] Add hover states and selection feedback styling
 - [ ] Responsive layout adjustments
 - [ ] Test route building and score calculation edge cases
+
+## Known bugs & UX issue
+
+- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs reads weird.
