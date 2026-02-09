@@ -25,16 +25,26 @@
 - [x] Add selection state for edges (click to toggle, track in App state)
 - [x] Style selected vs unselected edges differently (colour/thickness)
 
-## Phase 4: MVP Completion
+## Phase 4: Route Logic & Constraints
 
-- [ ] Calculate sum of selected edge values
+- [ ] Define Route type (ordered edge list with head/tail tracking)
+- [ ] Implement route state management (replace unordered Set with ordered model)
+- [ ] Implement edge eligibility logic (which edges can legally be selected next)
+- [ ] Enforce continuity rule: selected edge must connect to head or tail of current route
+- [ ] Enforce no-repeat-node rule: reject edges whose other node is already in the route
+- [ ] Implement constrained deselection (only allow removing from route ends)
+- [ ] Calculate and expose sum of selected edge values
+- [ ] Visual feedback: distinguish eligible vs ineligible edges on the map
+
+## Phase 5: MVP Completion
+
 - [ ] Display running total on screen
 - [ ] Add clear/reset selection button
-- [ ] Show list of currently selected routes
+- [ ] Show list of currently selected routes (ordered)
 - [ ] Verify full flow works: load data → display map → select edges → see updated total
 - [ ] Code QA and refactoring — extract hardcoded magic numbers into named constants or configuration; general cleanup and structural improvements
 
-## Phase 5: Polish & Features
+## Phase 6: Polish & Features
 
 - [ ] Add UK outline SVG to `public/` and display as map background
 - [ ] Integrate `react-zoom-pan-pinch` for pan/zoom
@@ -45,3 +55,7 @@
 - [ ] Add hover states and selection feedback styling
 - [ ] Responsive layout adjustments
 - [ ] Test route building and score calculation edge cases
+
+## Known bugs & UX issue
+
+- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs reads weird.

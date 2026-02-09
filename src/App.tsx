@@ -1,36 +1,77 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import './styles/App.css';
 import MapCanvas from './components/MapCanvas';
+import RoutePanel from './components/RoutePanel';
+import { loadEdges } from './utils/csvLoader';
+import * as routeUtils from './utils/routeUtils';
+import type { Route } from './types';
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 
-function App() {
-    const [selectedEdgeKeys, setSelectedEdgeKeys] = useState<Set<string>>(new Set());
+const edges = loadEdges();
 
-    const handleToggleEdge = useCallback((edgeKey: string) => {
-        setSelectedEdgeKeys((prev) => {
-            const next = new Set(prev);
-            if (next.has(edgeKey)) {
-                next.delete(edgeKey);
-            } else {
-                next.add(edgeKey);
-            }
-            return next;
-        });
+function App() {
+    const [route, setRoute] = useState<Route>(routeUtils.createEmptyRoute);
+
+    const handleEdgeClick = useCallback((edgeKey: string) => {
+        setRoute((prev) => toggleEdgeInRoute(prev, edgeKey));
     }, []);
+
+    const selectedEdgeKeys = useMemo(
+        () => new Set(route.edges.map(routeUtils.getEdgeKey)),
+        [route],
+    );
+
+    const eligibleEdgeKeys = useMemo(
+        () => buildEligibleSet(route),
+        [route],
+    );
 
     return (
         <div className="container">
             <h1 className="text-4xl font-bold mb-8">Route Calculator</h1>
-            <MapCanvas
-                width={CANVAS_WIDTH}
-                height={CANVAS_HEIGHT}
-                selectedEdgeKeys={selectedEdgeKeys}
-                onToggleEdge={handleToggleEdge}
-            />
+            <div className="flex flex-row items-stretch gap-4">
+                <MapCanvas
+                    width={CANVAS_WIDTH}
+                    height={CANVAS_HEIGHT}
+                    edges={edges}
+                    selectedEdgeKeys={selectedEdgeKeys}
+                    eligibleEdgeKeys={eligibleEdgeKeys}
+                    onToggleEdge={handleEdgeClick}
+                />
+                <RoutePanel route={route} />
+            </div>
         </div>
     );
+}
+
+/** Returns the set of edge keys that are currently eligible for add or remove. */
+function buildEligibleSet(route: Route): Set<string> {
+    const keys = new Set<string>();
+    for (const edge of edges) {
+        const key = routeUtils.getEdgeKey(edge);
+        if (routeUtils.canAddEdge(route, edge) || routeUtils.canRemoveEdge(route, key)) {
+            keys.add(key);
+        }
+    }
+    return keys;
+}
+
+/** Applies add/remove logic for a clicked edge against the current route. */
+function toggleEdgeInRoute(route: Route, edgeKey: string): Route {
+    const edge = edges.find((e) => routeUtils.getEdgeKey(e) === edgeKey);
+    if (!edge) return route;
+
+    const isInRoute = route.edges.some((e) => routeUtils.getEdgeKey(e) === edgeKey);
+
+    if (isInRoute && routeUtils.canRemoveEdge(route, edgeKey)) {
+        return routeUtils.removeEdge(route, edgeKey);
+    }
+    if (!isInRoute && routeUtils.canAddEdge(route, edge)) {
+        return routeUtils.addEdge(route, edge);
+    }
+    return route;
 }
 
 export default App;

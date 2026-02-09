@@ -1,23 +1,26 @@
 import Node from './Node';
 import Edge from './Edge';
 import { createVisualNodes } from '../utils/coordinates';
-import { loadNodes, loadEdges } from '../utils/csvLoader';
+import { loadNodes } from '../utils/csvLoader';
 import type { CanvasNode, Edge as EdgeType } from '../types';
 
 interface MapCanvasProps {
     width: number;
     height: number;
+    edges: EdgeType[];
     selectedEdgeKeys: Set<string>;
+    eligibleEdgeKeys: Set<string>;
     onToggleEdge: (edgeKey: string) => void;
 }
 
 const nodes = loadNodes();
-const edges = loadEdges();
 
 export default function MapCanvas({
     width,
     height,
+    edges,
     selectedEdgeKeys,
+    eligibleEdgeKeys,
     onToggleEdge,
 }: MapCanvasProps) {
     const canvasNodes = createVisualNodes(nodes, width, height);
@@ -39,6 +42,7 @@ export default function MapCanvas({
                         y2={edge.to.y}
                         value={edge.value}
                         selected={selectedEdgeKeys.has(edge.edgeKey)}
+                        eligible={eligibleEdgeKeys.has(edge.edgeKey)}
                         edgeKey={edge.edgeKey}
                         onClick={onToggleEdge}
                     />
