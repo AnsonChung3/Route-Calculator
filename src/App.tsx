@@ -30,14 +30,16 @@ function App() {
     return (
         <div className="container">
             <h1 className="text-4xl font-bold mb-8">Route Calculator</h1>
-            <MapCanvas
-                width={CANVAS_WIDTH}
-                height={CANVAS_HEIGHT}
-                edges={edges}
-                selectedEdgeKeys={selectedEdgeKeys}
-                eligibleEdgeKeys={eligibleEdgeKeys}
-                onToggleEdge={handleEdgeClick}
-            />
+            <div className="flex flex-row items-stretch gap-4">
+                <MapCanvas
+                    width={CANVAS_WIDTH}
+                    height={CANVAS_HEIGHT}
+                    edges={edges}
+                    selectedEdgeKeys={selectedEdgeKeys}
+                    eligibleEdgeKeys={eligibleEdgeKeys}
+                    onToggleEdge={handleEdgeClick}
+                />
+            </div>
         </div>
     );
 }
