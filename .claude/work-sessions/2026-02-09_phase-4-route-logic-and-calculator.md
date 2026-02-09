@@ -15,7 +15,7 @@ Phase 3 delivered edge rendering and toggle selection using an unordered `Set<st
 - **Component name**: `RoutePanel` (not "Calculator" — it displays route details, not just a total).
 - **Layout**: App renders MapCanvas and RoutePanel in a horizontal flex row, same height. RoutePanel has a full coloured border for visual division.
 - **Data access**: Edge data loading is lifted from MapCanvas to App so both children can receive the full edge list as props. Node data loading stays in MapCanvas (RoutePanel doesn't need coordinates).
-- **RoutePanel scope**: Intentionally over-populated with information at this stage. Later phases will trim what's shown.
+- **RoutePanel scope**: Intentionally verbose about each selected edge (position, value, running total, head/tail). Later phases will trim per-edge columns. Not a statistics dashboard.
 
 ### Route type definition
 
@@ -90,17 +90,16 @@ An edge is **eligible for deselection** only if it is the first or last edge in 
 
 ---
 
-## Commit 3: Edge eligibility visual feedback on MapCanvas
+## Commit 3: Edge eligibility constraints on MapCanvas
 
-- [ ] Compute an `eligibleEdgeKeys: Set<string>` in App by iterating all edges and checking `canAddEdge` for each
-- [ ] Also include edges where `canRemoveEdge` is true (removable ends)
-- [ ] Pass `eligibleEdgeKeys` to MapCanvas as a new prop
-- [ ] Update MapCanvas to pass an `eligible` boolean prop to each Edge component
-- [ ] Update Edge component to accept `eligible` prop
-- [ ] Style ineligible edges: reduced opacity (e.g. 0.3) and `pointer-events: none` or `cursor: not-allowed`
-- [ ] Style eligible-but-unselected edges: normal opacity, default cursor
-- [ ] Selected edges retain their current accent styling regardless of eligibility
-- [ ] Verify: after selecting one edge, only connecting edges remain clickable; others are visually dimmed
+- [x] Compute an `eligibleEdgeKeys: Set<string>` in App by iterating all edges and checking `canAddEdge` for each
+- [x] Also include edges where `canRemoveEdge` is true (removable ends)
+- [x] Pass `eligibleEdgeKeys` to MapCanvas as a new prop
+- [x] Update MapCanvas to pass an `eligible` boolean prop to each Edge component
+- [x] Update Edge component to accept `eligible` prop
+- [x] Ineligible edges receive `pointer-events: none` (not clickable); no visual dimming (no opacity change)
+- [x] Selected edges retain their current accent styling regardless of eligibility
+- [x] Verify: after selecting one edge, only connecting edges remain clickable
 
 ---
 
@@ -129,10 +128,9 @@ An edge is **eligible for deselection** only if it is the first or last edge in 
   ```ts
   interface RoutePanelProps {
       route: Route;
-      edges: Edge[];           // full edge list (for reference/future use)
   }
   ```
-- [ ] RoutePanel receives these props from App
+- [ ] RoutePanel receives `route` from App
 
 ### Styling
 
@@ -141,39 +139,32 @@ An edge is **eligible for deselection** only if it is the first or last edge in 
 - [ ] Add internal padding (`p-4`) and `overflow-y-auto` for scrolling if content overflows
 - [ ] Set a background that distinguishes it from the map area (e.g. `bg-neutral-900` if the page is dark, or `bg-white` if light — match existing theme)
 
-### Displayed information (intentionally verbose — trim later)
+### Displayed information (edge-focused — intentionally verbose, trim later)
 
-- [ ] **Route summary section**:
-  - Heading: "Route Summary"
-  - Total value: sum of all selected edge values (from `getRouteTotal`)
-  - Number of edges selected: `route.edges.length`
-  - Number of nodes visited: `route.nodeSequence.length`
-  - Head node: `getHead(route)` or "—" if empty
-  - Tail node: `getTail(route)` or "—" if empty
+The primary content is a detailed per-edge list. The route summary is secondary.
 
-- [ ] **Node sequence section**:
-  - Heading: "Nodes Visited"
-  - Ordered list of node names from `route.nodeSequence` (numbered 1, 2, 3...)
-  - Empty-state text: "No nodes selected"
-
-- [ ] **Edge list section**:
+- [ ] **Selected edges list** (primary section):
   - Heading: "Selected Edges"
-  - Each edge shown as a row: `from → to` with value displayed (e.g. "York → Leeds — 15 pts")
-  - Edges listed in route order (traversal order, not alphabetical)
+  - Each edge shown as a row with the following columns/fields:
+    - **Position**: 1, 2, 3… (order in route)
+    - **From → To**: edge endpoints in traversal direction
+    - **Value**: the edge's point value
+    - **Running total**: cumulative sum up to and including this edge
+    - **Head/tail indicator**: label showing whether this edge is at the head end, tail end, or neither *(trimmable later)*
+  - Edges listed in route traversal order
   - Empty-state text: "No edges selected"
 
-- [ ] **Statistics section** (extra info for later trimming):
-  - Heading: "Statistics"
-  - Average edge value (total / count, or "—" if no edges)
-  - Highest-value edge in route (name and value, or "—")
-  - Lowest-value edge in route (name and value, or "—")
-  - Remaining capacity: placeholder text, e.g. "—/— edges used" (constraint limits not yet defined)
+- [ ] **Route summary section** (secondary, below edge list):
+  - Total value: sum of all selected edge values (from `getRouteTotal`)
+  - Number of edges selected: `route.edges.length`
+  - Head node: `getHead(route)` or "—" if empty *(trimmable later)*
+  - Tail node: `getTail(route)` or "—" if empty *(trimmable later)*
 
 ### Wire up in App
 
 - [ ] Import RoutePanel in App
 - [ ] Render RoutePanel inside the flex row, after MapCanvas
-- [ ] Pass `route` and `edges` as props
+- [ ] Pass `route` as a prop
 - [ ] Verify RoutePanel updates live as edges are selected/deselected on the map
 
 ---
@@ -183,4 +174,4 @@ An edge is **eligible for deselection** only if it is the first or last edge in 
 - `nodeSequence` derivation in `addEdge`/`removeEdge` is the trickiest part. The order matters: when an edge connects at the head, prepend the new node; when it connects at the tail, append. When removing from the head, shift the first node; when removing from the tail, pop the last node. But the *first* edge is a special case: it contributes two nodes.
 - Edge data is undirected in the CSV but stored with a `from`/`to` direction. The route logic must treat edges as undirected — matching either endpoint against head/tail.
 - The existing `Set<string>` derivation for MapCanvas is a compatibility shim. In a later phase, MapCanvas could accept the `Route` directly and do its own eligibility styling, but keeping the interface stable reduces churn in this commit.
-- RoutePanel is deliberately information-heavy. The intent is to see everything working end-to-end, then refine the display in phase 5/6.
+- RoutePanel is deliberately verbose **about each selected edge** (position, value, running total, head/tail). The intent is to surface per-edge detail end-to-end, then trim columns in later phases. It is not a dashboard of derived statistics.
