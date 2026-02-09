@@ -22,6 +22,11 @@ function App() {
         [route],
     );
 
+    const eligibleEdgeKeys = useMemo(
+        () => buildEligibleSet(route),
+        [route],
+    );
+
     return (
         <div className="container">
             <h1 className="text-4xl font-bold mb-8">Route Calculator</h1>
@@ -30,10 +35,23 @@ function App() {
                 height={CANVAS_HEIGHT}
                 edges={edges}
                 selectedEdgeKeys={selectedEdgeKeys}
+                eligibleEdgeKeys={eligibleEdgeKeys}
                 onToggleEdge={handleEdgeClick}
             />
         </div>
     );
+}
+
+/** Returns the set of edge keys that are currently eligible for add or remove. */
+function buildEligibleSet(route: Route): Set<string> {
+    const keys = new Set<string>();
+    for (const edge of edges) {
+        const key = routeUtils.getEdgeKey(edge);
+        if (routeUtils.canAddEdge(route, edge) || routeUtils.canRemoveEdge(route, key)) {
+            keys.add(key);
+        }
+    }
+    return keys;
 }
 
 /** Applies add/remove logic for a clicked edge against the current route. */

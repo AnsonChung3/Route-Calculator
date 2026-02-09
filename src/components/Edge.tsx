@@ -5,6 +5,7 @@ interface EdgeProps {
     y2: number;
     value: number;
     selected: boolean;
+    eligible: boolean;
     edgeKey: string;
     onClick: (edgeKey: string) => void;
 }
@@ -14,12 +15,16 @@ interface EdgeProps {
  * width change with selection state, a midpoint value label, and a wider
  * invisible hit-area line on top for reliable click targets.
  */
-export default function Edge({ x1, y1, x2, y2, value, selected, edgeKey, onClick }: EdgeProps) {
+export default function Edge({ x1, y1, x2, y2, value, selected, eligible, edgeKey, onClick }: EdgeProps) {
     const midX = (x1 + x2) / 2;
     const midY = (y1 + y2) / 2;
+    const interactive = selected || eligible;
 
     return (
-        <g onClick={() => onClick(edgeKey)} className="cursor-pointer">
+        <g
+            onClick={interactive ? () => onClick(edgeKey) : undefined}
+            className={interactive ? 'cursor-pointer' : 'pointer-events-none'}
+        >
             <line
                 x1={x1} y1={y1} x2={x2} y2={y2}
                 stroke={selected ? 'var(--color-accent-500)' : 'var(--color-neutral-600)'}
