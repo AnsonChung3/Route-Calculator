@@ -28,7 +28,7 @@ This project is being developed almost entirely through LLM-assisted coding, wit
 
 ## Data Format
 
-Nodes: `id, name, latitude, longitude` (WGS84 decimal degrees)
+Nodes: `id, town, latitude, longitude` (WGS84 decimal degrees)
 Edges: `from, to, value` (from/to are location names)
 
 ## Testing

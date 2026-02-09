@@ -7,23 +7,23 @@
 
 ## Phase 2: Node Display Prototype
 
-- [ ] Create `Node` type definition (`src/types/index.ts`)
+- [x] Create `Node` type definition (`src/types/index.ts`)
 - [x] Create sample data files (`src/data/nodes.csv`, `src/data/edges.csv`)
-- [ ] Create CSV loader utility (`src/utils/csvLoader.ts`)
-- [ ] Create coordinate conversion utility (`src/utils/coordinates.ts`) - lat/long to canvas x/y
-- [ ] Create MapCanvas component (`src/components/MapCanvas.tsx`) - empty square container
-- [ ] Create Node component (`src/components/Node.tsx`) - basic styled dot/marker
-- [ ] Wire up App.tsx - load nodes, convert coordinates, render on canvas
+- [x] Create CSV loader utility (`src/utils/csvLoader.ts`)
+- [x] Create coordinate conversion utility (`src/utils/coordinates.ts`) - lat/long to canvas x/y
+- [x] Create MapCanvas component (`src/components/MapCanvas.tsx`) - empty square container
+- [x] Create Node component (`src/components/Node.tsx`) - basic styled dot/marker
+- [x] Wire up App.tsx - load nodes, convert coordinates, render on canvas
 
 ## Phase 3: Edge Display & Selection
 
-- [ ] Add `Edge` type definition to `src/types/index.ts`
-- [ ] Create Edge component (`src/components/Edge.tsx`) - SVG line between two points with value label
-- [ ] Load edge data from CSV in App.tsx
-- [ ] Connect edges to node positions (lookup by name)
-- [ ] Render edges on MapCanvas
-- [ ] Add selection state for edges (click to toggle, track in App state)
-- [ ] Style selected vs unselected edges differently (colour/thickness)
+- [x] Add `Edge` type definition to `src/types/index.ts`
+- [x] Create Edge component (`src/components/Edge.tsx`) - SVG line between two points with value label
+- [x] Load edge data from CSV in App.tsx
+- [x] Connect edges to node positions (lookup by name)
+- [x] Render edges on MapCanvas
+- [x] Add selection state for edges (click to toggle, track in App state)
+- [x] Style selected vs unselected edges differently (colour/thickness)
 
 ## Phase 4: MVP Completion
 
