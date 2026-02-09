@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import './styles/App.css';
 import MapCanvas from './components/MapCanvas';
+import RoutePanel from './components/RoutePanel';
 import { loadEdges } from './utils/csvLoader';
 import * as routeUtils from './utils/routeUtils';
 import type { Route } from './types';
@@ -39,6 +40,7 @@ function App() {
                     eligibleEdgeKeys={eligibleEdgeKeys}
                     onToggleEdge={handleEdgeClick}
                 />
+                <RoutePanel route={route} />
             </div>
         </div>
     );
