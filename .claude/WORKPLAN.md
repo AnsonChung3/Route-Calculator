@@ -17,13 +17,13 @@
 
 ## Phase 3: Edge Display & Selection
 
-- [ ] Add `Edge` type definition to `src/types/index.ts`
-- [ ] Create Edge component (`src/components/Edge.tsx`) - SVG line between two points with value label
-- [ ] Load edge data from CSV in App.tsx
-- [ ] Connect edges to node positions (lookup by name)
-- [ ] Render edges on MapCanvas
-- [ ] Add selection state for edges (click to toggle, track in App state)
-- [ ] Style selected vs unselected edges differently (colour/thickness)
+- [x] Add `Edge` type definition to `src/types/index.ts`
+- [x] Create Edge component (`src/components/Edge.tsx`) - SVG line between two points with value label
+- [x] Load edge data from CSV in App.tsx
+- [x] Connect edges to node positions (lookup by name)
+- [x] Render edges on MapCanvas
+- [x] Add selection state for edges (click to toggle, track in App state)
+- [x] Style selected vs unselected edges differently (colour/thickness)
 
 ## Phase 4: MVP Completion
 
