@@ -15,3 +15,8 @@ export interface Edge {
     to: string;
     value: number;
 }
+
+export interface Route {
+    edges: Edge[];
+    nodeSequence: string[];
+}
