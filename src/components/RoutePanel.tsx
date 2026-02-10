@@ -1,8 +1,13 @@
-import type { Route } from '../types';
+import * as types from '../types';
 import * as routeUtils from '../utils/routeUtils';
 
 interface RoutePanelProps {
-    route: Route;
+    route: types.Route;
+    category: types.RouteCategory;
+    targetTier: types.TierName;
+    tierEvaluation: types.TierEvaluation;
+    onChangeCategory: (cat: types.RouteCategory) => void;
+    onChangeTargetTier: (tier: types.TierName) => void;
 }
 
 export default function RoutePanel({ route }: RoutePanelProps) {
@@ -64,7 +69,7 @@ export default function RoutePanel({ route }: RoutePanelProps) {
 }
 
 /** Renders a single row in the selected edges table with position, endpoints, value, running total, and head/tail label. */
-function EdgeRow({ index, route, edgeCount }: { index: number; route: Route; edgeCount: number }) {
+function EdgeRow({ index, route, edgeCount }: { index: number; route: types.Route; edgeCount: number }) {
     const from = route.nodeSequence[index];
     const to = route.nodeSequence[index + 1];
     const value = route.edges[index].value;

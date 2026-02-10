@@ -2,17 +2,27 @@ import { useState, useCallback, useMemo } from 'react';
 import './styles/App.css';
 import MapCanvas from './components/MapCanvas';
 import RoutePanel from './components/RoutePanel';
-import { loadEdges } from './utils/csvLoader';
+import { loadEdges, loadNodes } from './utils/csvLoader';
 import * as routeUtils from './utils/routeUtils';
-import type { Route } from './types';
+import { evaluateRoute } from './utils/tierEval';
+import { getTiersForCategory } from './data/tiers';
+import type { Route, RouteCategory, TierName } from './types';
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 
 const edges = loadEdges();
+const nodes = loadNodes();
 
 function App() {
     const [route, setRoute] = useState<Route>(routeUtils.createEmptyRoute);
+    const [category, setCategory] = useState<RouteCategory>('short');
+    const [targetTier, setTargetTier] = useState<TierName>('chrome');
+
+    const handleChangeCategory = useCallback((cat: RouteCategory) => {
+        setCategory(cat);
+        setTargetTier(getTiersForCategory(cat)[0].name);
+    }, []);
 
     const handleEdgeClick = useCallback((edgeKey: string) => {
         setRoute((prev) => toggleEdgeInRoute(prev, edgeKey));
@@ -28,6 +38,16 @@ function App() {
         [route],
     );
 
+    const specialNodeNames = useMemo(
+        () => new Set(nodes.filter((n) => n.special).map((n) => n.town)),
+        [],
+    );
+
+    const tierEvaluation = useMemo(
+        () => evaluateRoute(route, category, targetTier, specialNodeNames),
+        [route, category, targetTier, specialNodeNames],
+    );
+
     return (
         <div className="container">
             <h1 className="text-4xl font-bold mb-8">Route Calculator</h1>
@@ -35,12 +55,20 @@ function App() {
                 <MapCanvas
                     width={CANVAS_WIDTH}
                     height={CANVAS_HEIGHT}
+                    nodes={nodes}
                     edges={edges}
                     selectedEdgeKeys={selectedEdgeKeys}
                     eligibleEdgeKeys={eligibleEdgeKeys}
                     onToggleEdge={handleEdgeClick}
                 />
-                <RoutePanel route={route} />
+                <RoutePanel
+                    route={route}
+                    category={category}
+                    targetTier={targetTier}
+                    tierEvaluation={tierEvaluation}
+                    onChangeCategory={handleChangeCategory}
+                    onChangeTargetTier={setTargetTier}
+                />
             </div>
         </div>
     );
