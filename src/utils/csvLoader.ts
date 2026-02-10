@@ -11,6 +11,7 @@ interface NodeRow {
     Postcode: string;
     Address: string;
     Notes: string;
+    Special: string;
 }
 
 interface EdgeRow {
@@ -31,6 +32,7 @@ export function loadNodes(): Node[] {
         town: row.Town,
         latitude: Number(row.Latitude),
         longitude: Number(row.Longitude),
+        special: row.Special === '1',
     }));
 }
 

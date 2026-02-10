@@ -3,6 +3,7 @@ export interface Node {
     town: string;
     latitude: number;
     longitude: number;
+    special: boolean;
 }
 
 export type CanvasNode = Node & {
