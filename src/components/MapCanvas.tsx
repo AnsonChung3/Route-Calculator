@@ -48,7 +48,7 @@ export default function MapCanvas({
                 ))}
             </svg>
             {canvasNodes.map((node) => (
-                <Node key={node.id} x={node.x} y={node.y} town={node.town} />
+                <Node key={node.id} x={node.x} y={node.y} town={node.town} special={node.special} />
             ))}
         </div>
     );
