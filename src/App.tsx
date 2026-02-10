@@ -28,6 +28,8 @@ function App() {
         setRoute((prev) => toggleEdgeInRoute(prev, edgeKey));
     }, []);
 
+    // Referential stability: preserves Set identity when route hasn't changed,
+    // preventing unnecessary MapCanvas re-renders from category/tier toggles.
     const selectedEdgeKeys = useMemo(
         () => new Set(route.edges.map(routeUtils.getEdgeKey)),
         [route],
@@ -38,11 +40,14 @@ function App() {
         [route],
     );
 
+    // Static data: nodes never change, so compute once and cache permanently.
     const specialNodeNames = useMemo(
         () => new Set(nodes.filter((n) => n.special).map((n) => n.town)),
         [],
     );
 
+    // Recomputes on route/category/tier changes; skips redundant work when
+    // unrelated state updates trigger a re-render.
     const tierEvaluation = useMemo(
         () => evaluateRoute(route, category, targetTier, specialNodeNames),
         [route, category, targetTier, specialNodeNames],
