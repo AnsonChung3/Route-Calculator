@@ -1,23 +1,22 @@
 import Node from './Node';
 import Edge from './Edge';
 import { createVisualNodes } from '../utils/coordinates';
-import { loadNodes } from '../utils/csvLoader';
-import type { CanvasNode, Edge as EdgeType } from '../types';
+import type { Node as NodeType, CanvasNode, Edge as EdgeType } from '../types';
 
 interface MapCanvasProps {
     width: number;
     height: number;
+    nodes: NodeType[];
     edges: EdgeType[];
     selectedEdgeKeys: Set<string>;
     eligibleEdgeKeys: Set<string>;
     onToggleEdge: (edgeKey: string) => void;
 }
 
-const nodes = loadNodes();
-
 export default function MapCanvas({
     width,
     height,
+    nodes,
     edges,
     selectedEdgeKeys,
     eligibleEdgeKeys,
