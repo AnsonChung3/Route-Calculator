@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import './styles/App.css';
 import MapCanvas from './components/MapCanvas';
 import RoutePanel from './components/RoutePanel';
+import UploadScreen from './components/UploadScreen';
 import { parseEdges, parseNodes } from './utils/csvLoader';
 import * as routeUtils from './utils/routeUtils';
 import { evaluateRoute } from './utils/tierEval';
@@ -71,7 +72,7 @@ function App() {
     );
 
     if (!dataLoaded) {
-        return <div className="container"><p className="text-content-muted">Loading data…</p></div>;
+        return <UploadScreen onDataLoaded={(n, e) => { nodes = n; edges = e; setDataLoaded(true); }} />;
     }
 
     return (
