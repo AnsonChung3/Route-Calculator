@@ -103,6 +103,20 @@ Replace the current synchronous module-scope `loadNodes()` / `loadEdges()` calls
 
 ---
 
+## Open question: Does tier configuration need uploading in production?
+
+**Status:** Pending client confirmation
+
+`src/data/tiers.ts` currently lives alongside the CSVs in `src/data/`, and the entire `src/data/` folder is in `.gitignore`. This means `tiers.ts` also never reaches the remote repo.
+
+**Current assessment:** `tiers.ts` is application logic (tier names, edge count thresholds, point ranges, special node requirements), not game data (towns, coordinates, edge values). It defines the scoring structure, which is meaningless without the actual map data. It should be safe to commit to the repo and bundle in all builds.
+
+**Recommendation:** Move `tiers.ts` out of `src/data/` to make the boundary clear — e.g. `src/config/tiers.ts`. This separates committed code from `.gitignore`-d data files so there's no ambiguity about what ships in production.
+
+**Action needed:** Confirm with client whether tier definitions are considered sensitive. If they are, `tiers.ts` would need to be uploaded alongside the CSVs, which adds a third file to the upload screen and requires the tier config to be parsed at runtime rather than imported as a module. If they're not sensitive, move the file and commit it.
+
+---
+
 ## Notes
 
 - Commits 1 and 2 are independent. Commits 3–5 are sequential.
