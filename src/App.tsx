@@ -2,7 +2,9 @@ import { useState, useCallback, useMemo } from 'react';
 import './styles/App.css';
 import MapCanvas from './components/MapCanvas';
 import RoutePanel from './components/RoutePanel';
-import { loadEdges, loadNodes } from './utils/csvLoader';
+import nodesRaw from './data/nodes.csv?raw';
+import edgesRaw from './data/edges.csv?raw';
+import { parseEdges, parseNodes } from './utils/csvLoader';
 import * as routeUtils from './utils/routeUtils';
 import { evaluateRoute } from './utils/tierEval';
 import { getTiersForCategory } from './data/tiers';
@@ -11,8 +13,8 @@ import type { Route, RouteCategory, TierName } from './types';
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 
-const edges = loadEdges();
-const nodes = loadNodes();
+const edges = parseEdges(edgesRaw);
+const nodes = parseNodes(nodesRaw);
 
 function App() {
     const [route, setRoute] = useState<Route>(routeUtils.createEmptyRoute);
