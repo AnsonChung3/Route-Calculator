@@ -101,12 +101,16 @@ Detailed plan with per-commit breakdown: `.claude/work-sessions/2026-02-10_phase
 - [ ] Add hover states and selection feedback styling
 - [ ] Responsive layout adjustments
 - [ ] Test route building and score calculation edge cases
+- [ ] Extract repeated Tailwind class strings into component-level constants or small wrapper components (e.g. the toggle-button styling shared by category and tier buttons)
 
 ## Known/Potential bugs & UX issue
 
-- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs reads weird.
+- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs doesn't reads natural to a human. Potentially, let user choose head node and keep it as head wen the array changes.
 - [ ] Force RoutePanel to always be the same height as the MapCanvas
-- [ ] Make RoutePanel overflow-y scroll
+- [ ] Make table in RoutePanel overflow-y scroll
 - [ ] Non-null assertion on tier lookup (`tierEval.ts:16`, `RoutePanel.tsx:36`) — `tiers.find(...)!` will throw if `targetTier` isn't in the current category's list. Safe today because `handleChangeCategory` resets the tier, but fragile if future code paths skip that reset. Consider a defensive fallback.
-- [ ] `buildEligibleSet` and `toggleEdgeInRoute` in `App.tsx` capture the module-level `edges` constant implicitly rather than receiving it as an argument. Works for static data but prevents isolated testing or dynamic edge sets.
 - [ ] `EdgeRow` in `RoutePanel.tsx` recalculates `runningTotal` via `slice + reduce` on every render. Fine at current route sizes but inefficient for longer routes — precomputing a cumulative-sum array would scale better.
+- [ ] Remove 'End' column in RoutePanel
+- [ ] Remove redundant sectiont between the route table and tier status
+- [ ] Change the display of contraint status the the bottom of RoutePanel. Show only when special node constraint is relavent. Make it the same style display as the edge count constraint, i.e. 'Special nodes 1/2'
+- [ ] Add a line of display to RoutePanel, ideally between the header 'Selected Edges' and the actual table, display the `{head} <-> {tail}` for UX
