@@ -3,6 +3,7 @@ export interface Node {
     town: string;
     latitude: number;
     longitude: number;
+    special: boolean;
 }
 
 export type CanvasNode = Node & {
@@ -19,4 +20,27 @@ export interface Edge {
 export interface Route {
     edges: Edge[];
     nodeSequence: string[];
+}
+
+export type RouteCategory = 'short' | 'long';
+
+export type TierName = 'chrome' | 'bronze' | 'silver' | 'gold' | 'specialGold' | 'platinum';
+
+export interface TierDefinition {
+    name: TierName;
+    edgeCount: { min: number; max: number | null };
+    pointRange: { min: number; max: number };
+    minSpecialNodes: number;
+}
+
+export interface TierEvaluation {
+    edgeCount: number;
+    total: number;
+    specialNodeCount: number;
+    constraints: {
+        edgeCountMet: boolean;
+        totalMet: boolean;
+        specialNodesMet: boolean;
+    };
+    allMet: boolean;
 }

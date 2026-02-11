@@ -36,6 +36,55 @@
 - [ ] Calculate and expose sum of selected edge values
 - [ ] Visual feedback: distinguish eligible vs ineligible edges on the map
 
+## Phase 4B: Tiered Award System
+
+### Game rules
+
+Players declare a route category and a target tier before/during route building. Both are easy to change at any time.
+
+**Short route tiers:**
+
+| Tier   | Edge count | Point range |
+| ------ | ---------- | ----------- |
+| Chrome | 4 edges    | 120–175     |
+| Bronze | min 7      | 180–220     |
+| Silver | min 10     | 225–285     |
+| Gold   | min 12     | 290–326     |
+
+**Long route tiers:**
+
+| Tier         | Edge count | Special nodes | Point range |
+| ------------ | ---------- | ------------- | ----------- |
+| Bronze       | min 12     | min 1         | 300–395     |
+| Silver       | min 16     | min 1         | 400–495     |
+| Gold         | min 20     | min 1         | 500–540     |
+| Special Gold | exactly 22 | min 2         | exactly 540 |
+| Platinum     | exactly 23 | min 2         | exactly 560 |
+
+Point ranges have intentional gaps between tiers. Some edge counts are exact, others are minimums. "Special nodes" are a subset of map nodes flagged in the data.
+
+### User declarations
+
+`category: RouteCategory` (`'short'` | `'long'`) and `targetTier: TierName` live in App state, separate from `Route`. Declarations are a lens for evaluation, not a constraint on construction — changing them never clears or invalidates the route. When `category` changes, `targetTier` resets to the first tier in the new category's list.
+
+### Data flow
+
+App owns all state. Derived values (`specialNodeNames`, `tierEvaluation`) are computed via `useMemo`. RoutePanel receives declarations, evaluation result, and change callbacks as props. Data flows down, events flow up — no shared context or side effects.
+
+### Special nodes
+
+`special: boolean` is a data attribute on `Node`, parsed from the CSV. It plays no role in route construction (`canAddEdge`/`addEdge` are unaware of it). A `Set<string>` of special node names is derived once from loaded nodes and passed to the evaluation function, which counts how many route nodes are in the set.
+
+### Implementation
+
+Detailed plan with per-commit breakdown: `.claude/work-sessions/2026-02-10_phase-4b-tiered-award-system.md`
+
+- [ ] Extend `Node` with `special: boolean`; update CSV and loader
+- [ ] Add tier types to `src/types/index.ts`; define tier config in `src/data/tiers.ts`
+- [ ] Create `src/utils/tierEval.ts` — pure `evaluateRoute()` and `countSpecialNodes()`
+- [ ] Wire `category`, `targetTier`, and derived evaluation into App state; pass to RoutePanel
+- [ ] Add declaration controls and constraint status display in RoutePanel
+
 ## Phase 5: MVP Completion
 
 - [ ] Display running total on screen
@@ -49,13 +98,19 @@
 - [ ] Add UK outline SVG to `public/` and display as map background
 - [ ] Integrate `react-zoom-pan-pinch` for pan/zoom
 - [ ] Create ScorePanel component - display selected routes and running total
-- [ ] Add `Tier` type definition and tier configuration data
-- [ ] Implement tier calculation logic (check target met, stop count valid)
-- [ ] Display tier qualification status in ScorePanel
 - [ ] Add hover states and selection feedback styling
 - [ ] Responsive layout adjustments
 - [ ] Test route building and score calculation edge cases
+- [ ] Extract repeated Tailwind class strings into component-level constants or small wrapper components (e.g. the toggle-button styling shared by category and tier buttons)
 
-## Known bugs & UX issue
+## Known/Potential bugs & UX issue
 
-- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs reads weird.
+- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs doesn't reads natural to a human. Potentially, let user choose head node and keep it as head wen the array changes.
+- [ ] Force RoutePanel to always be the same height as the MapCanvas
+- [ ] Make table in RoutePanel overflow-y scroll
+- [ ] Non-null assertion on tier lookup (`tierEval.ts:16`, `RoutePanel.tsx:36`) — `tiers.find(...)!` will throw if `targetTier` isn't in the current category's list. Safe today because `handleChangeCategory` resets the tier, but fragile if future code paths skip that reset. Consider a defensive fallback.
+- [ ] `EdgeRow` in `RoutePanel.tsx` recalculates `runningTotal` via `slice + reduce` on every render. Fine at current route sizes but inefficient for longer routes — precomputing a cumulative-sum array would scale better.
+- [ ] Remove 'End' column in RoutePanel
+- [ ] Remove redundant sectiont between the route table and tier status
+- [ ] Change the display of contraint status the the bottom of RoutePanel. Show only when special node constraint is relavent. Make it the same style display as the edge count constraint, i.e. 'Special nodes 1/2'
+- [ ] Add a line of display to RoutePanel, ideally between the header 'Selected Edges' and the actual table, display the `{head} <-> {tail}` for UX
