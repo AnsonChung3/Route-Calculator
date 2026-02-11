@@ -55,13 +55,14 @@ function App() {
 
     const eligibleEdgeKeys = useMemo(
         () => buildEligibleSet(route),
-        [route],
+        [route, dataLoaded],
     );
 
-    // Static data: nodes never change, so compute once and cache permanently.
+    // Static data: nodes never change after load, but the memo must recompute
+    // once when dataLoaded flips from false to true.
     const specialNodeNames = useMemo(
         () => new Set(nodes.filter((n) => n.special).map((n) => n.town)),
-        [],
+        [dataLoaded],
     );
 
     // Recomputes on route/category/tier changes; skips redundant work when
