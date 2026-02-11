@@ -45,21 +45,21 @@ Players declare a route category and a target tier before/during route building.
 **Short route tiers:**
 
 | Tier   | Edge count | Point range |
-|--------|-----------|-------------|
-| Chrome | 4 edges   | 120–175     |
-| Bronze | min 7     | 180–220     |
-| Silver | min 10    | 225–285     |
-| Gold   | min 12    | 290–326     |
+| ------ | ---------- | ----------- |
+| Chrome | 4 edges    | 120–175     |
+| Bronze | min 7      | 180–220     |
+| Silver | min 10     | 225–285     |
+| Gold   | min 12     | 290–326     |
 
 **Long route tiers:**
 
-| Tier         | Edge count  | Special nodes | Point range  |
-|--------------|------------|---------------|--------------|
-| Bronze       | min 12     | min 1         | 300–395      |
-| Silver       | min 16     | min 1         | 400–495      |
-| Gold         | min 20     | min 1         | 500–540      |
-| Special Gold | exactly 22 | min 2         | exactly 540  |
-| Platinum     | exactly 23 | min 2         | exactly 560  |
+| Tier         | Edge count | Special nodes | Point range |
+| ------------ | ---------- | ------------- | ----------- |
+| Bronze       | min 12     | min 1         | 300–395     |
+| Silver       | min 16     | min 1         | 400–495     |
+| Gold         | min 20     | min 1         | 500–540     |
+| Special Gold | exactly 22 | min 2         | exactly 540 |
+| Platinum     | exactly 23 | min 2         | exactly 560 |
 
 Point ranges have intentional gaps between tiers. Some edge counts are exact, others are minimums. "Special nodes" are a subset of map nodes flagged in the data.
 
@@ -102,6 +102,11 @@ Detailed plan with per-commit breakdown: `.claude/work-sessions/2026-02-10_phase
 - [ ] Responsive layout adjustments
 - [ ] Test route building and score calculation edge cases
 
-## Known bugs & UX issue
+## Known/Potential bugs & UX issue
 
 - [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs reads weird.
+- [ ] Force RoutePanel to always be the same height as the MapCanvas
+- [ ] Make RoutePanel overflow-y scroll
+- [ ] Non-null assertion on tier lookup (`tierEval.ts:16`, `RoutePanel.tsx:36`) — `tiers.find(...)!` will throw if `targetTier` isn't in the current category's list. Safe today because `handleChangeCategory` resets the tier, but fragile if future code paths skip that reset. Consider a defensive fallback.
+- [ ] `buildEligibleSet` and `toggleEdgeInRoute` in `App.tsx` capture the module-level `edges` constant implicitly rather than receiving it as an argument. Works for static data but prevents isolated testing or dynamic edge sets.
+- [ ] `EdgeRow` in `RoutePanel.tsx` recalculates `runningTotal` via `slice + reduce` on every render. Fine at current route sizes but inefficient for longer routes — precomputing a cumulative-sum array would scale better.
