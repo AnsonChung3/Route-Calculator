@@ -22,10 +22,10 @@ Phase 5 introduces dual data loading per ADR-003: auto-load from bundled CSVs in
 
 ## Commit 1: Add Vite environment files
 
-- [ ] Create `.env.development` with `VITE_BUNDLE_DATA=true`
-- [ ] Create `.env.production` with `VITE_BUNDLE_DATA=false`
-- [ ] Add `/// <reference types="vite/client" />` to `src/vite-env.d.ts` if not already present
-- [ ] Add `VITE_BUNDLE_DATA` to the `ImportMetaEnv` interface in `src/vite-env.d.ts` for type safety
+- [x] Create `.env.development` with `VITE_BUNDLE_DATA=true`
+- [x] Create `.env.production` with `VITE_BUNDLE_DATA=false`
+- [x] Add `/// <reference types="vite/client" />` to `src/vite-env.d.ts` if not already present
+- [x] Add `VITE_BUNDLE_DATA` to the `ImportMetaEnv` interface in `src/vite-env.d.ts` for type safety
 
 ---
 
@@ -33,11 +33,11 @@ Phase 5 introduces dual data loading per ADR-003: auto-load from bundled CSVs in
 
 Extract parsing logic from `loadNodes` and `loadEdges` into pure functions that accept raw CSV strings. Remove the static `?raw` imports from `csvLoader.ts`.
 
-- [ ] Rename `loadNodes()` → `parseNodes(raw: string): Node[]` — takes raw CSV string, returns parsed array
-- [ ] Rename `loadEdges()` → `parseEdges(raw: string): Edge[]` — same pattern
-- [ ] Remove `import nodesRaw from '../data/nodes.csv?raw'` and `import edgesRaw from '../data/edges.csv?raw'`
-- [ ] Export both parse functions
-- [ ] Temporarily update `App.tsx` to call the new signatures (pass raw strings via inline dynamic import or temporary static import) so the app still compiles. This is a transitional state — commit 3 will wire it up properly.
+- [x] Rename `loadNodes()` → `parseNodes(raw: string): Node[]` — takes raw CSV string, returns parsed array
+- [x] Rename `loadEdges()` → `parseEdges(raw: string): Edge[]` — same pattern
+- [x] Remove `import nodesRaw from '../data/nodes.csv?raw'` and `import edgesRaw from '../data/edges.csv?raw'`
+- [x] Export both parse functions
+- [x] Temporarily update `App.tsx` to call the new signatures (pass raw strings via inline dynamic import or temporary static import) so the app still compiles. This is a transitional state — commit 3 will wire it up properly.
 
 ---
 
@@ -45,34 +45,34 @@ Extract parsing logic from `loadNodes` and `loadEdges` into pure functions that 
 
 Replace the current synchronous module-scope `loadNodes()` / `loadEdges()` calls with module-scope variables and an async auto-load effect.
 
-- [ ] Declare module-scope `let nodes: Node[] = []` and `let edges: Edge[] = []` in `App.tsx`
-- [ ] Add `useState<boolean>(false)` for `dataLoaded`
-- [ ] Add `useEffect` that runs once on mount:
+- [x] Declare module-scope `let nodes: Node[] = []` and `let edges: Edge[] = []` in `App.tsx`
+- [x] Add `useState<boolean>(false)` for `dataLoaded`
+- [x] Add `useEffect` that runs once on mount:
   - Check `import.meta.env.VITE_BUNDLE_DATA === 'true'`
   - If true: dynamic-import `../data/nodes.csv?raw` and `../data/edges.csv?raw`, parse with `parseNodes` / `parseEdges`, assign to module-scope variables, call `setDataLoaded(true)`
   - If false: do nothing (upload screen will render)
-- [ ] Guard main app render: if `!dataLoaded`, render a placeholder (temporary — commit 5 adds the upload screen)
-- [ ] Update `buildEligibleSet` and `toggleEdgeInRoute` — these already reference module-scope `edges`, so they continue to work. Confirm no stale references.
+- [x] Guard main app render: if `!dataLoaded`, render a placeholder (temporary — commit 5 adds the upload screen)
+- [x] Update `buildEligibleSet` and `toggleEdgeInRoute` — these already reference module-scope `edges`, so they continue to work. Confirm no stale references.
 
 ---
 
 ## Commit 4: Create UploadScreen component
 
-- [ ] Create `src/components/UploadScreen.tsx`
-- [ ] Accept `onDataLoaded: () => void` as prop
-- [ ] Render two file inputs (or a single dropzone) for nodes CSV and edges CSV
-- [ ] On file selection, read file contents via `FileReader`, parse with `parseNodes` / `parseEdges`
-- [ ] Assign parsed data to the module-scope variables (import them or accept a setter callback)
-- [ ] Call `onDataLoaded()` to flip the flag
-- [ ] Basic styling consistent with the rest of the app
+- [x] Create `src/components/UploadScreen.tsx`
+- [x] Accept `onDataLoaded: () => void` as prop
+- [x] Render two file inputs (or a single dropzone) for nodes CSV and edges CSV
+- [x] On file selection, read file contents via `FileReader`, parse with `parseNodes` / `parseEdges`
+- [x] Assign parsed data to the module-scope variables (import them or accept a setter callback)
+- [x] Call `onDataLoaded()` to flip the flag
+- [x] Basic styling consistent with the rest of the app
 
 ---
 
 ## Commit 5: Wire UploadScreen into App
 
-- [ ] Import `UploadScreen` in `App.tsx`
-- [ ] Replace the placeholder from commit 3: when `!dataLoaded`, render `<UploadScreen onDataLoaded={...} />`
-- [ ] The `onDataLoaded` callback writes the parsed data to module-scope variables and calls `setDataLoaded(true)`
+- [x] Import `UploadScreen` in `App.tsx`
+- [x] Replace the placeholder from commit 3: when `!dataLoaded`, render `<UploadScreen onDataLoaded={...} />`
+- [x] The `onDataLoaded` callback writes the parsed data to module-scope variables and calls `setDataLoaded(true)`
 
 ---
 
