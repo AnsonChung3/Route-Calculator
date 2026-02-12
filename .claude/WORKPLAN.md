@@ -27,14 +27,14 @@
 
 ## Phase 4: Route Logic & Constraints
 
-- [ ] Define Route type (ordered edge list with head/tail tracking)
-- [ ] Implement route state management (replace unordered Set with ordered model)
-- [ ] Implement edge eligibility logic (which edges can legally be selected next)
-- [ ] Enforce continuity rule: selected edge must connect to head or tail of current route
-- [ ] Enforce no-repeat-node rule: reject edges whose other node is already in the route
-- [ ] Implement constrained deselection (only allow removing from route ends)
-- [ ] Calculate and expose sum of selected edge values
-- [ ] Visual feedback: distinguish eligible vs ineligible edges on the map
+- [x] Define Route type (ordered edge list with head/tail tracking)
+- [x] Implement route state management (replace unordered Set with ordered model)
+- [x] Implement edge eligibility logic (which edges can legally be selected next)
+- [x] Enforce continuity rule: selected edge must connect to head or tail of current route
+- [x] Enforce no-repeat-node rule: reject edges whose other node is already in the route
+- [x] Implement constrained deselection (only allow removing from route ends)
+- [x] Calculate and expose sum of selected edge values
+- [x] Visual feedback: distinguish eligible vs ineligible edges on the map
 
 ## Phase 4B: Tiered Award System
 
@@ -79,21 +79,40 @@ App owns all state. Derived values (`specialNodeNames`, `tierEvaluation`) are co
 
 Detailed plan with per-commit breakdown: `.claude/work-sessions/2026-02-10_phase-4b-tiered-award-system.md`
 
-- [ ] Extend `Node` with `special: boolean`; update CSV and loader
-- [ ] Add tier types to `src/types/index.ts`; define tier config in `src/data/tiers.ts`
-- [ ] Create `src/utils/tierEval.ts` — pure `evaluateRoute()` and `countSpecialNodes()`
-- [ ] Wire `category`, `targetTier`, and derived evaluation into App state; pass to RoutePanel
-- [ ] Add declaration controls and constraint status display in RoutePanel
+- [x] Extend `Node` with `special: boolean`; update CSV and loader
+- [x] Add tier types to `src/types/index.ts`; define tier config in `src/data/tiers.ts`
+- [x] Create `src/utils/tierEval.ts` — pure `evaluateRoute()` and `countSpecialNodes()`
+- [x] Wire `category`, `targetTier`, and derived evaluation into App state; pass to RoutePanel
+- [x] Add declaration controls and constraint status display in RoutePanel
 
-## Phase 5: MVP Completion
+## Phase 5: Dual Data Loading
 
-- [ ] Display running total on screen
+ADR: `.claude/artifacts/ADR-003-dual-data-loading.md`
+Detailed plan: `.claude/work-sessions/2026-02-11_phase-5-dual-data-loading.md`
+
+- [ ] Add `.env.development` and `.env.production` with `VITE_BUNDLE_DATA` flag
+- [ ] Refactor `csvLoader.ts` — extract pure parse functions, remove static `?raw` imports
+- [ ] Add module-scope data variables and `dataLoaded` state flag to App.tsx
+- [ ] Implement auto-load path via `useEffect` + dynamic import (gated on env flag)
+- [ ] Create `UploadScreen` component for manual CSV upload
+- [ ] Wire upload path to same parse functions and module-scope variables
+
+## Phase 6: MVP Completion
+
+- [x] Display running total on screen
 - [ ] Add clear/reset selection button
-- [ ] Show list of currently selected routes (ordered)
-- [ ] Verify full flow works: load data → display map → select edges → see updated total
+- [x] Show list of currently selected routes (ordered)
+- [x] Verify full flow works: load data → display map → select edges → see updated total
 - [ ] Code QA and refactoring — extract hardcoded magic numbers into named constants or configuration; general cleanup and structural improvements
+- [ ] Add tooltip to nodes — on hover, show all node information (id, town, coordinates, special status)
+- [ ] Make MapCanvas responsive — CSS `aspect-ratio: 1` sized from viewport height, with ResizeObserver to feed pixel dimensions to coordinate system
+- [ ] Force RoutePanel to always be the same height as the MapCanvas
+- [ ] Make table in RoutePanel overflow-y scroll
+- [ ] Remove 'End' column in RoutePanel
+- [ ] Remove redundant section between the route table and tier status
+- [ ] Change the display of constraint status to the bottom of RoutePanel. Show only when special node constraint is relevant. Make it the same style display as the edge count constraint, i.e. 'Special nodes 1/2'
 
-## Phase 6: Polish & Features
+## Phase 7: Polish & Features
 
 - [ ] Add UK outline SVG to `public/` and display as map background
 - [ ] Integrate `react-zoom-pan-pinch` for pan/zoom
@@ -105,12 +124,6 @@ Detailed plan with per-commit breakdown: `.claude/work-sessions/2026-02-10_phase
 
 ## Known/Potential bugs & UX issue
 
-- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs doesn't reads natural to a human. Potentially, let user choose head node and keep it as head wen the array changes.
-- [ ] Force RoutePanel to always be the same height as the MapCanvas
-- [ ] Make table in RoutePanel overflow-y scroll
+- [ ] Edges are set pairs. When new leg is added to the beginning/end of the array, shown legs doesn't reads natural to a human. Potentially, let user choose head node and keep it as head when the array changes.
 - [ ] Non-null assertion on tier lookup (`tierEval.ts:16`, `RoutePanel.tsx:36`) — `tiers.find(...)!` will throw if `targetTier` isn't in the current category's list. Safe today because `handleChangeCategory` resets the tier, but fragile if future code paths skip that reset. Consider a defensive fallback.
-- [ ] `EdgeRow` in `RoutePanel.tsx` recalculates `runningTotal` via `slice + reduce` on every render. Fine at current route sizes but inefficient for longer routes — precomputing a cumulative-sum array would scale better.
-- [ ] Remove 'End' column in RoutePanel
-- [ ] Remove redundant sectiont between the route table and tier status
-- [ ] Change the display of contraint status the the bottom of RoutePanel. Show only when special node constraint is relavent. Make it the same style display as the edge count constraint, i.e. 'Special nodes 1/2'
 - [ ] Add a line of display to RoutePanel, ideally between the header 'Selected Edges' and the actual table, display the `{head} <-> {tail}` for UX

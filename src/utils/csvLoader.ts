@@ -1,6 +1,4 @@
 import Papa from 'papaparse';
-import nodesRaw from '../data/nodes.csv?raw';
-import edgesRaw from '../data/edges.csv?raw';
 import type { Node, Edge } from '../types';
 
 interface NodeRow {
@@ -21,8 +19,8 @@ interface EdgeRow {
     Value: string;
 }
 
-export function loadNodes(): Node[] {
-    const { data } = Papa.parse<NodeRow>(nodesRaw, {
+export function parseNodes(raw: string): Node[] {
+    const { data } = Papa.parse<NodeRow>(raw, {
         header: true,
         skipEmptyLines: true,
     });
@@ -36,8 +34,8 @@ export function loadNodes(): Node[] {
     }));
 }
 
-export function loadEdges(): Edge[] {
-    const { data } = Papa.parse<EdgeRow>(edgesRaw, {
+export function parseEdges(raw: string): Edge[] {
+    const { data } = Papa.parse<EdgeRow>(raw, {
         header: true,
         skipEmptyLines: true,
     });

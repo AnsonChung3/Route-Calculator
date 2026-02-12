@@ -1,23 +1,41 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import './styles/App.css';
 import MapCanvas from './components/MapCanvas';
 import RoutePanel from './components/RoutePanel';
-import { loadEdges, loadNodes } from './utils/csvLoader';
+import UploadScreen from './components/UploadScreen';
+import { parseEdges, parseNodes } from './utils/csvLoader';
 import * as routeUtils from './utils/routeUtils';
 import { evaluateRoute } from './utils/tierEval';
 import { getTiersForCategory } from './data/tiers';
-import type { Route, RouteCategory, TierName } from './types';
+import type { Node, Edge, Route, RouteCategory, TierName } from './types';
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 
-const edges = loadEdges();
-const nodes = loadNodes();
+// Module-scope data storage (per ADR-002). Populated once via auto-load or
+// user upload, then never mutated. React doesn't track these — only the
+// dataLoaded flag triggers re-render.
+let nodes: Node[] = [];
+let edges: Edge[] = [];
 
 function App() {
+    const [dataLoaded, setDataLoaded] = useState(false);
     const [route, setRoute] = useState<Route>(routeUtils.createEmptyRoute);
     const [category, setCategory] = useState<RouteCategory>('short');
     const [targetTier, setTargetTier] = useState<TierName>('chrome');
+
+    useEffect(() => {
+        if (import.meta.env.VITE_BUNDLE_DATA !== 'true') return;
+
+        Promise.all([
+            import('./data/nodes.csv?raw'),
+            import('./data/edges.csv?raw'),
+        ]).then(([nodesMod, edgesMod]) => {
+            nodes = parseNodes(nodesMod.default);
+            edges = parseEdges(edgesMod.default);
+            setDataLoaded(true);
+        });
+    }, []);
 
     const handleChangeCategory = useCallback((cat: RouteCategory) => {
         setCategory(cat);
@@ -37,13 +55,14 @@ function App() {
 
     const eligibleEdgeKeys = useMemo(
         () => buildEligibleSet(route),
-        [route],
+        [route, dataLoaded],
     );
 
-    // Static data: nodes never change, so compute once and cache permanently.
+    // Static data: nodes never change after load, but the memo must recompute
+    // once when dataLoaded flips from false to true.
     const specialNodeNames = useMemo(
         () => new Set(nodes.filter((n) => n.special).map((n) => n.town)),
-        [],
+        [dataLoaded],
     );
 
     // Recomputes on route/category/tier changes; skips redundant work when
@@ -52,6 +71,10 @@ function App() {
         () => evaluateRoute(route, category, targetTier, specialNodeNames),
         [route, category, targetTier, specialNodeNames],
     );
+
+    if (!dataLoaded) {
+        return <UploadScreen onDataLoaded={(n, e) => { nodes = n; edges = e; setDataLoaded(true); }} />;
+    }
 
     return (
         <div className="container">
