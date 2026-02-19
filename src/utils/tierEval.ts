@@ -1,5 +1,5 @@
 import type { Route, RouteCategory, TierName, TierEvaluation } from '../types';
-import { getTiersForCategory } from '../data/tiers';
+import { getTiersForCategory } from './tiers';
 import { getRouteTotal } from './routeUtils';
 
 export function countSpecialNodes(nodeSequence: string[], specialNodeNames: Set<string>): number {

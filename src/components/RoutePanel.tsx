@@ -1,6 +1,6 @@
 import * as types from '../types';
 import * as routeUtils from '../utils/routeUtils';
-import { getTiersForCategory } from '../data/tiers';
+import { getTiersForCategory } from '../utils/tiers';
 import EdgeRow from './EdgeRow';
 import ConstraintRow from './ConstraintRow';
 

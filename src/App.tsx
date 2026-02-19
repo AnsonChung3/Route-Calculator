@@ -6,7 +6,7 @@ import UploadScreen from './components/UploadScreen';
 import { parseEdges, parseNodes } from './utils/csvLoader';
 import * as routeUtils from './utils/routeUtils';
 import { evaluateRoute } from './utils/tierEval';
-import { getTiersForCategory } from './data/tiers';
+import { getTiersForCategory } from './utils/tiers';
 import type { Node, Edge, Route, RouteCategory, TierName } from './types';
 
 const CANVAS_WIDTH = 800;
